@@ -6,7 +6,7 @@ const Sketchfab = () => {
     <div style={{ height: '100%', width: '100%', alignItems: 'center', flex: 1 }}>
       <div
         style={{
-          height: 600,
+          height: 600 ,
           width: 750,
           marginLeft: 'auto',
           marginRight: 'auto',
