@@ -1,0 +1,38 @@
+def accepts(transitions,initial,accepting,s,_val):
+    state = initial
+    state_travel=[]
+    val_=[]
+    num_elm_s = len(s)
+    i=0
+    while i< num_elm_s:
+        print(state)
+        try:
+            state = transitions[state][s[i]]
+            val_.append(_val[i])
+            i+=1
+        except:
+            state = transitions[state]['other']
+            
+            i+=1
+        if state in accepting:
+            if state !=99 and state !=6:
+                i-=1
+                state_travel.append( [state in accepting , fin_stage_map[state],state])
+                val_.append(_val[i])
+                val_.append(',')
+            else:
+                state_travel.append( [state in accepting , fin_stage_map[state],state])
+                val_.append(_val[i])
+                val_.append(',')
+    fin_val ="".join(val_).split(',')
+    print(fin_val)
+    fin_rem=[]
+    for i in fin_val:
+        fin_rem.append(i[:len(i)-1])
+    return state_travel,fin_rem
+
+fin=[15,12,18,19,21,22,24,25,27,28,3,4,5,6,8,9]
+
+acc = accepts(dfa,0,fin,_type,_val)
+print(acc[0])
+print(acc[1])

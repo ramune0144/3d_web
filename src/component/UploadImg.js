@@ -22,7 +22,7 @@ const UploadImg = () => {
     formData.append('file', file)
     const uploadImg = await axios({
       method: 'post',
-      url: 'http://127.0.0.1:5000/upload',
+      url: 'http://192.168.1.35:5000/upload',
       data: formData
     })
   }
@@ -46,9 +46,10 @@ const UploadImg = () => {
             marginLeft: 'auto',
             marginRight: 'auto',
             borderStyle: 'solid',
-            marginTop: '5%',
+            marginTop: '10%',
             borderWidth: '10',
             borderColor: '#343434'
+            
           }}>
           <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 0, 0], fov: 55 }}>
             <Suspense fallback={null}>
