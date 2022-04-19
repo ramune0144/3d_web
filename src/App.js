@@ -1,4 +1,5 @@
-import React from 'react'
+import React,{useState} from 'react'
+import Login from './screen/login_page';
 import { Route, Link, Routes } from 'react-router-dom'
 import UploadImg from './component/UploadImg'
 import {
@@ -56,7 +57,23 @@ const Sketchfab = () => {
 }
 
 
+
+function getToken() {
+  const tokenString = sessionStorage.getItem('token');
+  const userToken = JSON.parse(tokenString);
+  console.log(userToken)
+  return userToken?.token
+}
+
 function App() {
+  const [token, setToken] = useState(getToken());
+  if(!token) {
+    return (
+      <div style={{ alignItems: 'center', flex: 1 }}>
+        <Login />
+      </div>)
+  }
+  
   return (
     <div className='d-flex flex-column min-vh-100'>
       <Navbar expand="lg" className='navbar navbar-expand-md fixed-top ' style={{ backgroundColor: "#87b39f" }}>
@@ -68,14 +85,14 @@ function App() {
                 style={{ height: 40, width: 40 }}
                 alt="logo"
               />
-              <h2 style={{ marginLeft: "5%" }}>ระบบกู้คืนวัตถุโบราณ</h2>
+              <h2 style={{ marginLeft: "5%" }}>ระบบกู้คืนวัตถุโบราณ </h2>
             </div>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <div className="me-auto my-2 my-lg-0"></div>
             <Nav style={{ maxHeight: "100px" }} navbarScroll>
-              <Nav.Link href="/Sketchfab">Sketchfab</Nav.Link>
+              <Nav.Link href="/">Sketchfab</Nav.Link>
               <NavDropdown title="Option" id="navbarScrollingDropdown">
                 <NavDropdown.Item href="/Screen3drender">
                   ค้นหาจากชิ้นส่วน
@@ -90,21 +107,13 @@ function App() {
               </NavDropdown>
               <Nav.Link href="#action2">เกี่ยวกับ</Nav.Link>
             </Nav>
-            <Form className="d-flex">
-              <FormControl
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form>
+              <Button variant="outline-danger" onClick={()=>{sessionStorage.removeItem("token");  window.location.reload(false);}} >Logout</Button>
           </Navbar.Collapse>
         </Container>
       </Navbar>
    
       <Routes>
-        <Route path="/Sketchfab" element={<Sketchfab />}></Route>
+        <Route path="/" element={<Sketchfab />}></Route>
         <Route path="/Screen3drender" element={<UploadImg />}></Route>
         <Route path="/Datab" element={<Datab/>}></Route>
       </Routes>
@@ -117,22 +126,5 @@ function App() {
 
 export default App;
 
-// const App = () => {
-//   return (
-//     <div>
-//       <nav>
-//         <li>
-//           <Link to="/Sketchfab">Sketchfab</Link>
-//         </li>
-//         <li>
-//           <Link to="/Screen3drender">Screen3drender</Link>
-//         </li>
-//       </nav>
-//       <Routes>
-//         <Route path="/Sketchfab" element={<Sketchfab />}></Route>
-//         <Route path="/Screen3drender" element={<UploadImg />}></Route>
-//       </Routes>
-//     </div>
-//   )
-// }
+
 
